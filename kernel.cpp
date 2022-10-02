@@ -1,4 +1,6 @@
-#include "types.h""
+#include "types.h"
+#include "gdt.h"
+
 void printf(char* str) {
 	static uint16_t* VideoMemory = (uint16_t*)0xb8000;
 
@@ -17,9 +19,10 @@ extern "C" void callConstructors() {
 		(*i)();
 }
 
-// 不要改名
+// 不让编译器改名供外部汇编使用
 extern "C" void kernelMain(void* multiboot_struct, uint32_t magicnumber) {
 	printf("hi there, hello ring");
+	GlobalDescriptorTable gdt;
 	while(1);
 }
 

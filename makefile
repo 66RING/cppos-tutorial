@@ -1,8 +1,8 @@
-GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-leading-underscore
+GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-leading-underscore -fno-stack-protector
 ASPARAMS = --32
 LDPARAMS = -melf_i386
 
-objects = loader.o kernel.o
+objects = loader.o kernel.o gdt.o
 
 
 %.o: %.cpp
@@ -14,9 +14,6 @@ loader.o: loader.s
 mykernel.bin: linker.ld $(objects)
 	ld $(LDPARAMS) -T $< -o $@ $(objects)
 
-
-install: mykernel.bin
-	# cp $< /boot/mykernel.bin
 
 mykernel.iso: mykernel.bin
 	mkdir -p iso/boot/grub
@@ -34,11 +31,11 @@ mykernel.iso: mykernel.bin
 build: mykernel.iso
 
 clean:
-	rm -rf *.o
+	rm -rf *.o mykernel.bin
 
 run: build
 	qemu-system-i386 \
 		mykernel.iso
 
-.PHONY: run install clean build
+.PHONY: run clean build
 
