@@ -2,7 +2,9 @@ GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-excep
 ASPARAMS = --32
 LDPARAMS = -melf_i386
 
-objects = loader.o kernel.o gdt.o
+# 目标来自cpp文件或s文件
+objects = $(patsubst %.cpp, %.o, $(wildcard *.cpp)) $(patsubst %.s, %.o, $(wildcard *.s))
+
 
 
 %.o: %.cpp

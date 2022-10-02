@@ -14,4 +14,5 @@
 
 - 面向对象
 - 内敛汇编语法
+- `-fno-stack-protector`编译参数
 
