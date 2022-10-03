@@ -9,8 +9,8 @@ GlobalDescriptorTable::GlobalDescriptorTable()
 	// gdtr寄存器设置: 基地址(47~16), 界限(15~0)
 	// 编译器对数组内存的布局问题, 32位编译器将数组的低索引放在了高地址(栈)
 	uint32_t i[2];
-	i[0] = (uint32_t)this;
-	i[1] = sizeof(GlobalDescriptorTable) << 16;
+	i[0] = sizeof(GlobalDescriptorTable) << 16;
+	i[1] = (uint32_t)this;
 
 	// 数组地址与编译器相关, i[]作为临时数组
 	asm volatile (
